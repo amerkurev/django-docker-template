@@ -2,7 +2,7 @@ FROM python:3.11-alpine as base
 
 FROM base as builder
 
-RUN apk update && mkdir /install
+RUN apk update && apk --no-cache add python3-dev libpq-dev && mkdir /install
 WORKDIR /install
 COPY requirements.txt ./
 RUN pip install --no-cache-dir --prefix=/install -r ./requirements.txt
@@ -31,7 +31,7 @@ COPY $PROJECT_NAME $DJANGO_BASE_DIR
 
 # User
 RUN chmod +x /docker-entrypoint.sh && \
-    apk --no-cache add su-exec && \
+    apk --no-cache add su-exec libpq-dev && \
     mkdir -p $DJANGO_STATIC_ROOT && \
     adduser -s /bin/sh -D -u $USER_UID $USER && \
     chown -R $USER:$USER $DJANGO_BASE_DIR $DJANGO_STATIC_ROOT

@@ -2,31 +2,38 @@ version: "3.9"
 services:
   db:
     image: postgres:latest
-    env_file: .env
+    env_file:
+      - env/postgres.env
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - postgres-data:/var/lib/postgresql/data/
 
   web:
     build: .
     depends_on:
       - db
-    env_file: .env
+    env_file:
+      - env/postgres.env
+      - env/django.env
     volumes:
-      - static_data:/var/website/static
+      - static-data:/var/website/static
       - ./website:/usr/src/website
+    links:
+      - db:database
 
   nginx:
     image: nginx:latest
     depends_on:
       - web
+    env_file:
+      - env/nginx.env
     ports:
       - "80:80"
     volumes:
-      - static_data:/var/website/static:ro
+      - static-data:/var/website/static:ro
       - ./config/nginx:/etc/nginx/conf.d
     links:
       - web:web
 
 volumes:
-  postgres_data:
-  static_data:
+  postgres-data:
+  static-data:

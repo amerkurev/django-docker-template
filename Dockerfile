@@ -27,10 +27,11 @@ ENV \
 
 COPY --from=builder /install /usr/local
 COPY docker-entrypoint.sh /
+COPY run-server.sh /
 COPY $PROJECT_NAME $DJANGO_BASE_DIR
 
 # User
-RUN chmod +x /docker-entrypoint.sh && \
+RUN chmod +x /docker-entrypoint.sh /run-server.sh && \
     apk --no-cache add su-exec libpq-dev && \
     mkdir -p $DJANGO_STATIC_ROOT && \
     adduser -s /bin/sh -D -u $USER_UID $USER && \
@@ -40,4 +41,4 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 WORKDIR $DJANGO_BASE_DIR
 EXPOSE $GUNICORN_PORT
 
-CMD ["sh", "-c", "su-exec user gunicorn ${PROJECT_NAME}.wsgi:application --bind 0.0.0.0:${GUNICORN_PORT}"]
+CMD /run-server.sh

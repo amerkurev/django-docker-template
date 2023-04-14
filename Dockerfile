@@ -41,4 +41,4 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 WORKDIR $DJANGO_BASE_DIR
 EXPOSE $GUNICORN_PORT
 
-CMD /run-server.sh
+CMD ["/run-server.sh", "sh", "-c", "su-exec user gunicorn ${PROJECT_NAME}.wsgi:application --bind 0.0.0.0:${GUNICORN_PORT}"]

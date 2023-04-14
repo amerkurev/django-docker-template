@@ -3,4 +3,6 @@
 
 set -e
 
+# Insert your additional code here.
+
 exec "$@"

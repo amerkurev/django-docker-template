@@ -8,11 +8,10 @@ services:
 
   django:
     build: .
+    image: django-docker
     env_file: .env
     depends_on:
       - postgres
-    environment:
-      - "DJANGO_ALLOWED_HOSTS=127.0.0.1,localhost,real.domain.com`"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.development.rule=Host(`127.0.0.1`) || Host(`localhost`)"

@@ -161,10 +161,12 @@ STATIC_ROOT = os.environ['DJANGO_STATIC_ROOT']
 
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
 # Sessions
 SESSION_COOKIE_SECURE = os.getenv('DJANGO_SESSION_COOKIE_SECURE') in TRUE
@@ -175,5 +177,62 @@ CSRF_COOKIE_SECURE = os.getenv('DJANGO_CSRF_COOKIE_SECURE') in TRUE
 # Security Middleware (manage.py check --deploy)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
-SECURE_HSTS_SECONDS = 3600 * 24 * 7  # default - 0
+SECURE_HSTS_SECONDS = 60 * 60 * 24 * 7 * 2  # 2 weeks, default - 0
 SECURE_SSL_REDIRECT = os.getenv('DJANGO_SECURE_SSL_REDIRECT') in TRUE
+
+
+# Email settings
+EMAIL_HOST = os.getenv('DJANGO_EMAIL_HOST', 'localhost')
+EMAIL_PORT = int(os.getenv('DJANGO_EMAIL_PORT', 25))
+EMAIL_HOST_USER = os.getenv('DJANGO_EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.getenv('DJANGO_EMAIL_HOST_PASSWORD', '')
+EMAIL_USE_TLS = os.getenv('DJANGO_EMAIL_USE_TLS') in TRUE
+
+# Email address that error messages come from.
+SERVER_EMAIL = os.getenv('DJANGO_SERVER_EMAIL', 'root@localhost')
+
+# Default email address to use for various automated correspondence from the site managers.
+DEFAULT_FROM_EMAIL = os.getenv('DJANGO_DEFAULT_FROM_EMAIL', 'webmaster@localhost')
+
+# People who get code error notifications. In the format
+# [('Full Name', 'email@example.com'), ('Full Name', 'anotheremail@example.com')]
+ADMIN_NAME = os.getenv('DJANGO_ADMIN_NAME')
+ADMIN_EMAIL = os.getenv('DJANGO_ADMIN_EMAIL')
+ADMINS = [(ADMIN_NAME, ADMIN_EMAIL)]
+
+
+# Log settings
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            # https://docs.python.org/3/library/logging.html#logrecord-attributes
+            'format': '{levelname} [{asctime}] -- {message}',
+            'style': '{',
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'stream': sys.stdout,
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['mail_admins', 'console'] if not DEBUG else ['console'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+    },
+}

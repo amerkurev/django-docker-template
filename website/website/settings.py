@@ -32,7 +32,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', INSECURE_KEY)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DJANGO_DEBUG') in TRUE
 
-ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '')
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost')
 ALLOWED_HOSTS = list(map(methodcaller('strip'), ALLOWED_HOSTS.split(',')))
 
 INTERNAL_IPS = ['127.0.0.1']
@@ -103,8 +103,8 @@ if 'POSTGRES_DB' in os.environ:
         'NAME': os.environ['POSTGRES_DB'],
         'USER': os.environ['POSTGRES_USER'],
         'PASSWORD': os.environ['POSTGRES_PASSWORD'],
-        'HOST': 'database',
-        'PORT': '5432',  # default
+        'HOST': os.environ['POSTGRES_HOST'],
+        'PORT': os.environ['POSTGRES_PORT'],
     }
 
 

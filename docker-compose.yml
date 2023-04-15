@@ -1,35 +1,37 @@
 version: "3.9"
 services:
-  db:
+  postgres:
     image: postgres:15
     env_file: .env
     volumes:
       - "postgres-data:/var/lib/postgresql/data/"
 
-  web:
+  django:
     build: .
     env_file: .env
     depends_on:
-      - db
-    volumes:
-      - "static-data:/var/website/static"
-      - "./website:/usr/src/website"
-    links:
-      - "db:database"
+      - postgres
+    environment:
+      - "DJANGO_ALLOWED_HOSTS=127.0.0.1,localhost"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.web.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.django.rule=Host(`127.0.0.1`) || Host(`localhost`)"
+      - "traefik.http.routers.django.entrypoints=web"
 
   reverse-proxy:
     image: traefik:v2.9
     env_file: .env
+    command:
+      #- "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
     ports:
       - "80:80"
       - "8080:8080"
     volumes:
-      - "static-data:/var/website/static:ro"
-      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
 volumes:
   postgres-data:
-  static-data:

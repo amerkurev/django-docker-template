@@ -12,11 +12,14 @@ services:
     depends_on:
       - postgres
     environment:
-      - "DJANGO_ALLOWED_HOSTS=127.0.0.1,localhost"
+      - "DJANGO_ALLOWED_HOSTS=127.0.0.1,localhost,real.domain.com`"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.django.rule=Host(`127.0.0.1`) || Host(`localhost`)"
-      - "traefik.http.routers.django.entrypoints=web"
+      - "traefik.http.routers.development.rule=Host(`127.0.0.1`) || Host(`localhost`)"
+      - "traefik.http.routers.development.entrypoints=web"
+#      - "traefik.http.routers.production.rule=Host(`real.domain.com`)"
+#      - "traefik.http.routers.production.entrypoints=websecure"
+#      - "traefik.http.routers.production.tls.certresolver=le-resolver"
 
   reverse-proxy:
     image: traefik:v2.9
@@ -27,10 +30,17 @@ services:
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.le-resolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.le-resolver.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.le-resolver.acme.email=admin@yourdomain.com"
+      - "--certificatesresolvers.le-resolver.acme.storage=/letsencrypt/acme.json"
     ports:
       - "80:80"
+      - "443:443"
       - "8080:8080"
     volumes:
+      - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
 volumes:

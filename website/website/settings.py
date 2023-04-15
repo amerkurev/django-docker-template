@@ -196,9 +196,10 @@ DEFAULT_FROM_EMAIL = os.getenv('DJANGO_DEFAULT_FROM_EMAIL', 'webmaster@localhost
 
 # People who get code error notifications. In the format
 # [('Full Name', 'email@example.com'), ('Full Name', 'anotheremail@example.com')]
-ADMIN_NAME = os.getenv('DJANGO_ADMIN_NAME')
+ADMIN_NAME = os.getenv('DJANGO_ADMIN_NAME', '')
 ADMIN_EMAIL = os.getenv('DJANGO_ADMIN_EMAIL')
-ADMINS = [(ADMIN_NAME, ADMIN_EMAIL)]
+if ADMIN_EMAIL:
+    ADMINS = [(ADMIN_NAME, ADMIN_EMAIL)]
 
 
 # Log settings

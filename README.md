@@ -6,8 +6,8 @@ start developing the business logic of your web application, skipping all the co
 **The technology stack used includes:**
 - [`Django`](https://www.djangoproject.com) ver. 4.2
 - [`PostgreSQL`](https://www.postgresql.org) ver. 15
-- [`Gunicorn`](https://gunicorn.org) (WSGI HTTP Server) ver. 20.1
-- [`Traefik`](https://traefik.io/traefik/) (reverse proxy) ver. 2.9
+- [`Gunicorn`](https://gunicorn.org) ver. 20.1
+- [`Traefik`](https://traefik.io/traefik/) ver. 2.9
 - [`Docker`](https://docs.docker.com/get-docker/) and [`Docker Compose`](https://docs.docker.com/compose/)
 
 Nothing extra, only the essentials! You can easily add everything else yourself by expanding the existing configuration files:

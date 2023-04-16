@@ -13,10 +13,7 @@ import os
 import sys
 
 from pathlib import Path
-from operator import methodcaller
-
-
-TRUE = ('1', 'true', 'True', 'TRUE', 'on', 'yes')
+from website import is_true, split_with_comma
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,10 +27,9 @@ INSECURE_KEY = 'django-insecure-0eikswwglid=ukts4l2_b=676m!-q_%154%2z@&l3)n6)cp3
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', INSECURE_KEY)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DJANGO_DEBUG') in TRUE
+DEBUG = is_true(os.getenv('DJANGO_DEBUG'))
 
-ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost')
-ALLOWED_HOSTS = list(filter(None, map(methodcaller('strip'), ALLOWED_HOSTS.split(','))))
+ALLOWED_HOSTS = split_with_comma(os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost'))
 
 INTERNAL_IPS = ['127.0.0.1']
 
@@ -169,16 +165,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Sessions
-SESSION_COOKIE_SECURE = os.getenv('DJANGO_SESSION_COOKIE_SECURE') in TRUE
+SESSION_COOKIE_SECURE = is_true(os.getenv('DJANGO_SESSION_COOKIE_SECURE'))
 
 # Settings for CSRF cookie.
-CSRF_COOKIE_SECURE = os.getenv('DJANGO_CSRF_COOKIE_SECURE') in TRUE
+CSRF_COOKIE_SECURE = is_true(os.getenv('DJANGO_CSRF_COOKIE_SECURE'))
+CSRF_TRUSTED_ORIGINS = split_with_comma(os.getenv('DJANGO_CSRF_TRUSTED_ORIGINS', ''))
 
 # Security Middleware (manage.py check --deploy)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 SECURE_HSTS_SECONDS = 60 * 60 * 24 * 7 * 2  # 2 weeks, default - 0
-SECURE_SSL_REDIRECT = os.getenv('DJANGO_SECURE_SSL_REDIRECT') in TRUE
+SECURE_SSL_REDIRECT = is_true(os.getenv('DJANGO_SECURE_SSL_REDIRECT'))
 
 
 # Email settings
@@ -186,7 +183,7 @@ EMAIL_HOST = os.getenv('DJANGO_EMAIL_HOST', 'localhost')
 EMAIL_PORT = int(os.getenv('DJANGO_EMAIL_PORT', 25))
 EMAIL_HOST_USER = os.getenv('DJANGO_EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.getenv('DJANGO_EMAIL_HOST_PASSWORD', '')
-EMAIL_USE_TLS = os.getenv('DJANGO_EMAIL_USE_TLS') in TRUE
+EMAIL_USE_TLS = is_true(os.getenv('DJANGO_EMAIL_USE_TLS'))
 
 # Email address that error messages come from.
 SERVER_EMAIL = os.getenv('DJANGO_SERVER_EMAIL', 'root@localhost')

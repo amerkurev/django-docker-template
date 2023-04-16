@@ -3,6 +3,7 @@ services:
   postgres:
     image: postgres:15
     env_file: .env
+    restart: unless-stopped
     volumes:
       - "postgres-data:/var/lib/postgresql/data/"
 
@@ -10,6 +11,7 @@ services:
     build: .
     image: django-docker
     env_file: .env
+    restart: unless-stopped
     depends_on:
       - postgres
     labels:
@@ -20,6 +22,7 @@ services:
   reverse-proxy:
     image: traefik:v2.9
     env_file: .env
+    restart: unless-stopped
     command:
       #- "--log.level=DEBUG"
       - "--api.insecure=true"
@@ -34,7 +37,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "8080:8080"
+      #- "8080:8080"
     volumes:
       - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"

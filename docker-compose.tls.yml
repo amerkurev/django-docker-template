@@ -4,6 +4,9 @@ services:
     environment:
       - "DJANGO_ALLOWED_HOSTS=${MY_DOMAIN}"
       - "DJANGO_CSRF_TRUSTED_ORIGINS=https://${MY_DOMAIN}"
+      - "DJANGO_SESSION_COOKIE_SECURE=true"
+      - "DJANGO_CSRF_COOKIE_SECURE=true"
+      - "DJANGO_SECURE_SSL_REDIRECT=true"
     labels:
       - "traefik.http.routers.production.rule=Host(`${MY_DOMAIN}`)"
       - "traefik.http.routers.production.entrypoints=websecure"

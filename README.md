@@ -31,7 +31,7 @@ So, what do you get by using this project as a template for your project? Let's 
 
 ## How to use
 
-### For development on your computer:
+### For development on your computer
 1. Clone the repository to your computer and go to the `django-docker-template` directory:
 ```console
 git clone https://github.com/amerkurev/django-docker-template.git
@@ -45,7 +45,7 @@ docker build -t amerkurev/django_docker_template:master .
 
 3. Start the Django development server inside the Django container:
 ```console
-docker run -it -p 8000:8000 -v $(pwd)/website:/usr/src/website amerkurev/django_docker_template:master python manage.py runserver 0.0.0.0:8000
+docker run -it --rm -p 8000:8000 -v $(pwd)/website:/usr/src/website amerkurev/django_docker_template:master python manage.py runserver 0.0.0.0:8000
 ```
 
 Now you can go to http://127.0.0.1:8000/admin/ in your browser. The superuser with login and password `admin/admin` is already created. Go to the Django admin panel and try updating the server code "on the fly." Everything works just like if you were running the Django development server outside the container. 
@@ -53,12 +53,12 @@ Now you can go to http://127.0.0.1:8000/admin/ in your browser. The superuser wi
 
 4. Run tests:
 ```console
-docker run -it amerkurev/django_docker_template:master python manage.py test polls
+docker run -it --rm amerkurev/django_docker_template:master python manage.py test polls
 ```
 
 5. Interactive shell with the Django project environment:
 ```console
-docker run -it -v $(pwd)/website:/usr/src/website amerkurev/django_docker_template:master python manage.py shell
+docker run -it --rm -v $(pwd)/website:/usr/src/website amerkurev/django_docker_template:master python manage.py shell
 ```
 
 6. Start all services locally (Postgres, Gunicorn, Traefik) using docker-compose:

@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  django:
+    environment:
+      - "DJANGO_ALLOWED_HOSTS=${MY_DOMAIN}"
+      - "DJANGO_CSRF_TRUSTED_ORIGINS=https://${MY_DOMAIN}"
+    labels:
+      - "traefik.http.routers.production.rule=Host(`${MY_DOMAIN}`)"
+      - "traefik.http.routers.production.entrypoints=websecure"
+      - "traefik.http.routers.production.tls.certresolver=le-resolver"

@@ -32,6 +32,7 @@ So, what do you get by using this project as a template for your project? Let's 
 ## How to use
 
 ### For development on your computer
+
 1. Clone the repository to your computer and go to the `django-docker-template` directory:
 ```console
 git clone https://github.com/amerkurev/django-docker-template.git
@@ -43,13 +44,22 @@ cd django-docker-template
 docker build -t amerkurev/django_docker_template:master .
 ```
 
-3. Start the Django development server inside the Django container:
+3. Run the Django development server inside the Django container:
 ```console
-docker run -it --rm -p 8000:8000 -v $(pwd)/website:/usr/src/website amerkurev/django_docker_template:master python manage.py runserver 0.0.0.0:8000
+docker run -it --rm -p 8000:8000 -v sqlite:/sqlite -v $(pwd)/website:/usr/src/website amerkurev/django_docker_template:master python manage.py runserver 0.0.0.0:8000
 ```
 
-Now you can go to http://127.0.0.1:8000/admin/ in your browser. The superuser with login and password `admin/admin` is already created. Go to the Django admin panel and try updating the server code "on the fly." Everything works just like if you were running the Django development server outside the container. 
-> Note: in this case, the Postgres database is not running, and Django is working with the SQLite database.
+Now you can go to http://127.0.0.1:8000/admin/ in your browser. The superuser with the login and password `admin/admin` is already created. Go to the Django admin panel and try updating the server code "on the fly." Everything works just like if you were running the Django development server outside the container.
+
+> Note that we mount the directory with your source code inside the container, so you can work with the project in your IDE, and changes will be visible inside the container, and the Django development server will restart itself. 
+>
+> Another important point is the use of SQLite3 instead of Postgres (which we don't run). In our example, we add a volume named `sqlite`. This data is stored persistently and does not disappear between restarts of the Django development server. However, if you have a second similar project, it would be better to change the volume name from `sqlite` to something else so that the second project uses its own copy of the database. For example:
+>
+>```console
+>docker run -it --rm -p 8000:8000 -v another_sqlite:/sqlite -v $(pwd)/website:/usr/src/website amerkurev/django_docker_template:master python manage.py >runserver 0.0.0.0:8000
+>```
+>
+> To better understand how volumes work in Docker, refer to the official [documentation](https://docs.docker.com/storage/volumes/).
 
 4. Run tests:
 ```console
@@ -58,7 +68,7 @@ docker run -it --rm amerkurev/django_docker_template:master python manage.py tes
 
 5. Interactive shell with the Django project environment:
 ```console
-docker run -it --rm -v $(pwd)/website:/usr/src/website amerkurev/django_docker_template:master python manage.py shell
+docker run -it --rm -v sqlite:/sqlite amerkurev/django_docker_template:master python manage.py shell
 ```
 
 6. Start all services locally (Postgres, Gunicorn, Traefik) using docker-compose:
@@ -68,6 +78,14 @@ docker compose up
 
 Enjoy watching the lines run in the terminal 🖥️   
 And after a few seconds, open your browser at http://127.0.0.1/admin/. The first user already exists, welcome to the Django admin panel.
+
+#### Django settings
+
+Some Django settings from the [`settings.py`](https://github.com/amerkurev/django-docker-template/blob/master/website/website/settings.py) file are stored in environment variables. You can easily change these settings in the [`.env`](https://github.com/amerkurev/django-docker-template/blob/master/.env) file. This file does not contain all the necessary settings, but many of them. Add additional settings to environment variables if needed. 
+
+It is important to note the following: **never store sensitive settings such as DJANGO_SECRET_KEY or DJANGO_EMAIL_HOST_PASSWORD in your repository**! Docker allows you to override environment variable values from additional files, the command line, or the current session. Store passwords and other sensitive information separately from the code and only connect this information at system startup.
+
+### For deployment on a server
 
 ## License
 

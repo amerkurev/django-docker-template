@@ -79,6 +79,16 @@ docker compose up
 Enjoy watching the lines run in the terminal 🖥️   
 And after a few seconds, open your browser at http://127.0.0.1/admin/. The first user already exists, welcome to the Django admin panel.
 
+Want to delete everything? No problem, the command below will stop all containers, remove them and their images.
+```console
+docker compose down --remove-orphans --rmi local
+```
+
+To delete the Postgre database as well, add the `-v` flag to the command:
+```console
+docker compose down --remove-orphans --rmi local -v
+```
+
 #### Django settings
 
 Some Django settings from the [`settings.py`](https://github.com/amerkurev/django-docker-template/blob/master/website/website/settings.py) file are stored in environment variables. You can easily change these settings in the [`.env`](https://github.com/amerkurev/django-docker-template/blob/master/.env) file. This file does not contain all the necessary settings, but many of them. Add additional settings to environment variables if needed. 
@@ -86,6 +96,33 @@ Some Django settings from the [`settings.py`](https://github.com/amerkurev/djang
 > It is important to note the following: **never store sensitive settings such as DJANGO_SECRET_KEY or DJANGO_EMAIL_HOST_PASSWORD in your repository!** Docker allows you to override environment variable values from additional files, the command line, or the current session. Store passwords and other sensitive information separately from the code and only connect this information at system startup.
 
 ### For deployment on a server
+
+#### Prerequisite
+
+For the the Let's Encrypt HTTP challenge you will need:
+- A publicly accessible host allowing connections on port `80` & `443` with docker & docker-compose installed. A virtual machine in any cloud provider can be used as a host.
+- A DNS record with the domain you want to expose pointing to this host.
+
+1. Clone the repository on your host and go to the `django-docker-template` directory:
+```console
+git clone https://github.com/amerkurev/django-docker-template.git
+cd django-docker-template
+```
+
+2. Configure as described in the [Django settings](#django-settings) section or leave everything as is.
+
+3. Run, specifying your domain:
+```console
+MY_DOMAIN=your.domain.com docker compose -f docker-compose.yml -f docker-compose.tls.yml up
+```
+
+It will take a few seconds to start the database, migrate, collect static files, and obtain a Let's Encrypt certificate. So wait a little and open https://your.domain.com in your browser. Your server is ready to work 🏆 
+
+> Don't worry about renewing the Let's Encrypt certificate, it will happen automatically.
+
+## What's next?
+
+Now that you have a working project, you can extend it as you like, adding [dashboards for monitoring service health](https://doc.traefik.io/traefik/operations/dashboard/), [centralized log collection](https://www.fluentd.org), [secret storage](https://www.vaultproject.io), and of course, your own Django applications. All of this is beyond the scope of the current description, as the idea of this project is minimalism and providing only the essentials. Good luck!
 
 ## License
 

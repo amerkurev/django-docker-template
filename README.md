@@ -83,7 +83,7 @@ And after a few seconds, open your browser at http://127.0.0.1/admin/. The first
 
 Some Django settings from the [`settings.py`](https://github.com/amerkurev/django-docker-template/blob/master/website/website/settings.py) file are stored in environment variables. You can easily change these settings in the [`.env`](https://github.com/amerkurev/django-docker-template/blob/master/.env) file. This file does not contain all the necessary settings, but many of them. Add additional settings to environment variables if needed. 
 
-It is important to note the following: **never store sensitive settings such as DJANGO_SECRET_KEY or DJANGO_EMAIL_HOST_PASSWORD in your repository**! Docker allows you to override environment variable values from additional files, the command line, or the current session. Store passwords and other sensitive information separately from the code and only connect this information at system startup.
+> It is important to note the following: **never store sensitive settings such as DJANGO_SECRET_KEY or DJANGO_EMAIL_HOST_PASSWORD in your repository!** Docker allows you to override environment variable values from additional files, the command line, or the current session. Store passwords and other sensitive information separately from the code and only connect this information at system startup.
 
 ### For deployment on a server
 

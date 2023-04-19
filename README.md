@@ -104,7 +104,7 @@ Some Django settings from the [`settings.py`](https://github.com/amerkurev/djang
 
 #### Prerequisite
 
-For the the Let's Encrypt HTTP challenge you will need:
+For the Let's Encrypt HTTP challenge you will need:
 - A publicly accessible host allowing connections on port `80` & `443` with docker & docker-compose installed. A virtual machine in any cloud provider can be used as a host.
 - A DNS record with the domain you want to expose pointing to this host.
 

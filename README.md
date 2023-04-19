@@ -78,11 +78,13 @@ docker run -it --rm -v sqlite:/sqlite django-docker-template:master python manag
 
 7. Start all services locally (Postgres, Gunicorn, Traefik) using docker-compose:
 ```console
-docker compose up
+docker compose -f docker-compose.debug.yml up
 ```
 
 Enjoy watching the lines run in the terminal 🖥️   
 And after a few seconds, open your browser at http://127.0.0.1/admin/. The first user already exists, welcome to the Django admin panel.
+
+Django is still in Debug mode! You can work in your IDE, write code, and immediately see changes inside the container. However, you are currently using Traefik and Postgres. You can also add Redis or MongoDB, and all of this will work in your development environment. This is very convenient.
 
 Want to delete everything? No problem, the command below will stop all containers, remove them and their images.
 ```console

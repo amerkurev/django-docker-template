@@ -41,17 +41,17 @@ cd django-docker-template
 
 2. Build the Docker container image with Django:
 ```console
-docker build -t amerkurev/django-docker-template:master .
+docker build -t django-docker-template:master .
 ```
 
 3. Create the first superuser:
 ```console
-docker run -it --rm -p 8000:8000 -v sqlite:/sqlite -v $(pwd)/website:/usr/src/website amerkurev/django-docker-template:master python manage.py createsuperuser
+docker run -it --rm -p 8000:8000 -v sqlite:/sqlite -v $(pwd)/website:/usr/src/website django-docker-template:master python manage.py createsuperuser
 ```
 
 4. Run the Django development server inside the Django container:
 ```console
-docker run -it --rm -p 8000:8000 -v sqlite:/sqlite -v $(pwd)/website:/usr/src/website amerkurev/django-docker-template:master python manage.py runserver 0.0.0.0:8000
+docker run -it --rm -p 8000:8000 -v sqlite:/sqlite -v $(pwd)/website:/usr/src/website django-docker-template:master python manage.py runserver 0.0.0.0:8000
 ```
 
 Now you can go to http://127.0.0.1:8000/admin/ in your browser. Go to the Django admin panel and try updating the server code "on the fly." Everything works just like if you were running the Django development server outside the container.
@@ -61,19 +61,19 @@ Now you can go to http://127.0.0.1:8000/admin/ in your browser. Go to the Django
 > Another important point is the use of SQLite3 instead of Postgres (which we don't run). In our example, we add a volume named `sqlite`. This data is stored persistently and does not disappear between restarts of the Django development server. However, if you have a second similar project, it would be better to change the volume name from `sqlite` to something else so that the second project uses its own copy of the database. For example:
 >
 >```console
->docker run -it --rm -p 8000:8000 -v another_sqlite:/sqlite -v $(pwd)/website:/usr/src/website amerkurev/django-docker-template:master python manage.py runserver 0.0.0.0:8000
+>docker run -it --rm -p 8000:8000 -v another_sqlite:/sqlite -v $(pwd)/website:/usr/src/website django-docker-template:master python manage.py runserver 0.0.0.0:8000
 >```
 >
 > To better understand how volumes work in Docker, refer to the official [documentation](https://docs.docker.com/storage/volumes/).
 
 5. Run tests:
 ```console
-docker run -it --rm amerkurev/django-docker-template:master python manage.py test polls
+docker run -it --rm django-docker-template:master python manage.py test polls
 ```
 
 6. Interactive shell with the Django project environment:
 ```console
-docker run -it --rm -v sqlite:/sqlite amerkurev/django-docker-template:master python manage.py shell
+docker run -it --rm -v sqlite:/sqlite django-docker-template:master python manage.py shell
 ```
 
 7. Start all services locally (Postgres, Gunicorn, Traefik) using docker-compose:

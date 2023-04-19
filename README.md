@@ -108,6 +108,8 @@ For the Let's Encrypt HTTP challenge you will need:
 - A publicly accessible host allowing connections on port `80` & `443` with docker & docker-compose installed. A virtual machine in any cloud provider can be used as a host.
 - A DNS record with the domain you want to expose pointing to this host.
 
+#### Steps on a server
+
 1. Clone the repository on your host and go to the `django-docker-template` directory:
 ```console
 git clone https://github.com/amerkurev/django-docker-template.git

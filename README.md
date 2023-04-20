@@ -86,6 +86,8 @@ And after a few seconds, open your browser at http://127.0.0.1/admin/. The first
 
 Django is still in Debug mode! You can work in your IDE, write code, and immediately see changes inside the container. However, you are currently using Traefik and Postgres. You can also add Redis or MongoDB, and all of this will work in your development environment. This is very convenient.
 
+> Between Docker Compose restarts, your database data and media files uploaded to the server will be preserved because they are stored in special volumes that are not deleted when containers are restarted.
+
 Want to delete everything? No problem, the command below will stop all containers, remove them and their images.
 ```console
 docker compose down --remove-orphans --rmi local

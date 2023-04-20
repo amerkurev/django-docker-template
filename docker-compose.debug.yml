@@ -16,7 +16,8 @@ services:
     restart: unless-stopped
     command: ["/run-server.sh", "sh", "-c", "su-exec user python manage.py runserver 0.0.0.0:8000"]
     volumes:
-      - "./website:/usr/src/website"
+      - "media-data:/var/www/media"
+      - "./website:/usr/src/website"  # mount the source code
     depends_on:
       - postgres
     labels:
@@ -49,3 +50,4 @@ services:
 
 volumes:
   postgres-data:
+  media-data:

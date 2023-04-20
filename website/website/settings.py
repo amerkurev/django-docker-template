@@ -148,6 +148,15 @@ USE_L10N = True
 USE_TZ = True
 
 
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+# Example: "/var/www/example.com/media/"
+MEDIA_ROOT = os.environ['DJANGO_MEDIA_ROOT']
+
+# URL that handles the media served from MEDIA_ROOT.
+# Examples: "http://example.com/media/", "http://media.example.com/"
+MEDIA_URL = os.getenv('DJANGO_MEDIA_URL', 'media/')
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 

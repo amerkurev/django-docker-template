@@ -8,6 +8,8 @@ from django.contrib import admin
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
+    # file will be saved to MEDIA_ROOT/uploads/2023/04/20
+    upload = models.FileField(upload_to='uploads/%Y/%m/%d/', null=True, blank=True)
 
     def __str__(self):
         return self.question_text

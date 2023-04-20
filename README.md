@@ -23,6 +23,7 @@ So, what do you get by using this project as a template for your project? Let's 
 - A well-configured Django project, with individual settings that can be changed using environment variables
 - Building and debugging a Django project in Docker
 - A ready-made docker-compose file that brings together Postgres - Django - Gunicorn - Traefik
+- Serving static files (and user-uploaded files) with Nginx
 - Automatic database migration and static file collection when starting or restarting the Django container
 - Automatic creation of the first user in Django with a default login and password
 - Automatic creation and renewal of Let's Encrypt certificate 🔥

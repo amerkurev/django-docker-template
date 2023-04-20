@@ -11,3 +11,8 @@ services:
       - "traefik.http.routers.production.entrypoints=websecure"
       - "traefik.http.routers.production.tls.certresolver=le-resolver"
       - "traefik.http.routers.production.priority=1"
+
+  nginx:
+    labels:
+      - "traefik.http.routers.staticfiles.entrypoints=websecure"
+      - "traefik.http.routers.staticfiles.tls.certresolver=le-resolver"

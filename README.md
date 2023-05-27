@@ -74,7 +74,7 @@ docker run -it --rm -v sqlite:/sqlite django-docker-template:master python manag
 
 6. Start all services locally (Postgres, Gunicorn, Traefik) using docker-compose:
 ```console
-docker compose -f docker-compose.debug.yml up
+docker compose -f docker-compose.debug.yml up -d
 ```
 
 Enjoy watching the lines run in the terminal 🖥️   
@@ -120,7 +120,7 @@ cd django-docker-template
 
 3. Run, specifying your domain:
 ```console
-MY_DOMAIN=your.domain.com docker compose -f docker-compose.yml -f docker-compose.tls.yml up
+MY_DOMAIN=your.domain.com docker compose -f docker-compose.yml -f docker-compose.tls.yml up -d
 ```
 
 It will take a few seconds to start the database, migrate, collect static files, and obtain a Let's Encrypt certificate. So wait a little and open https://your.domain.com in your browser. Your server is ready to work 🏆 

@@ -80,6 +80,29 @@ docker compose -f docker-compose.debug.yml up -d
 Enjoy watching the lines run in the terminal 🖥️   
 And after a few seconds, open your browser at http://127.0.0.1/admin/. The first user already exists, welcome to the Django admin panel.
 
+7. With the containers running, you can run manage.py commands using this format:
+
+- Run test suite
+ ```console
+ docker-compose exec django python manage.py test
+ ```
+- Make migrations
+ ```console
+ docker-compose exec django python manage.py makemigrations
+ ```
+- Create superuser
+ ```console
+ docker-compose exec django python manage.py createsuperuser
+ ```
+- Access the Django shell
+ ```console
+ docker-compose exec django python manage.py shell
+ ```
+- Check the project for deployment issues
+ ```console
+ docker-compose exec django python manage.py check --deploy
+ ```
+
 Django is still in Debug mode! You can work in your IDE, write code, and immediately see changes inside the container. However, you are currently using Traefik and Postgres. You can also add Redis or MongoDB, and all of this will work in your development environment. This is very convenient.
 
 > Between Docker Compose restarts, your database data and media files uploaded to the server will be preserved because they are stored in special volumes that are not deleted when containers are restarted.

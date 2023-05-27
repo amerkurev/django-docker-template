@@ -74,13 +74,15 @@ docker run -it --rm -v sqlite:/sqlite django-docker-template:master python manag
 
 6. Start all services locally (Postgres, Gunicorn, Traefik) using docker-compose:
 ```console
-docker compose -f docker-compose.debug.yml up -d
+docker compose -f docker-compose.debug.yml up -d --build
 ```
 
 Enjoy watching the lines run in the terminal 🖥️   
 And after a few seconds, open your browser at http://127.0.0.1/admin/. The first user already exists, welcome to the Django admin panel.
 
-7. With the containers running, you can run manage.py commands using this format:
+### More development commands
+
+With the containers running, you can run manage.py commands using this format:
 
 - Run test suite
  ```console

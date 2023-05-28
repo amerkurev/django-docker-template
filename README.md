@@ -127,7 +127,7 @@ It will take a few seconds to start the database, migrate, collect static files,
 
 > Don't worry about renewing the Let's Encrypt certificate, it will happen automatically.
 
-4. After running the containers, you can execute manage.py commands using this format:
+4. After running the containers, you can execute [manage.py commands](https://docs.djangoproject.com/en/4.2/ref/django-admin/#available-commands) using this format:
 ```console
 docker compose exec django python manage.py test
 

@@ -100,6 +100,19 @@ Some Django settings from the [`settings.py`](https://github.com/amerkurev/djang
 
 > It is important to note the following: **never store sensitive settings such as DJANGO_SECRET_KEY or DJANGO_EMAIL_HOST_PASSWORD in your repository!** Docker allows you to override environment variable values from additional files, the command line, or the current session. Store passwords and other sensitive information separately from the code and only connect this information at system startup.
 
+#### More development commands
+
+With the containers running, you can run manage.py commands using this format:
+
+- Run test suite
+ ```console
+ docker-compose exec django python manage.py test
+ ```
+- Access the Django shell
+ ```console
+ docker-compose exec django python manage.py shell
+ ```
+
 ### For deployment on a server
 
 #### Prerequisite
@@ -120,7 +133,7 @@ cd django-docker-template
 
 3. Run, specifying your domain:
 ```console
-MY_DOMAIN=your.domain.com docker compose -f docker-compose.yml -f docker-compose.tls.yml up
+MY_DOMAIN=your.domain.com docker compose -f docker-compose.yml -f docker-compose.tls.yml up -d
 ```
 
 It will take a few seconds to start the database, migrate, collect static files, and obtain a Let's Encrypt certificate. So wait a little and open https://your.domain.com in your browser. Your server is ready to work 🏆 

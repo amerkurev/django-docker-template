@@ -94,7 +94,7 @@ To delete the Postgre database as well, add the `-v` flag to the command:
 docker compose down --remove-orphans --rmi local -v
 ```
 
-### Django settings
+#### Django settings
 
 Some Django settings from the [`settings.py`](https://github.com/amerkurev/django-docker-template/blob/master/website/website/settings.py) file are stored in environment variables. You can easily change these settings in the [`.env`](https://github.com/amerkurev/django-docker-template/blob/master/.env) file. This file does not contain all the necessary settings, but many of them. Add additional settings to environment variables if needed. 
 

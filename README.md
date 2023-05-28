@@ -104,14 +104,14 @@ Some Django settings from the [`settings.py`](https://github.com/amerkurev/djang
 
 With the containers running, you can run manage.py commands using this format:
 
-- Run test suite
- ```console
- docker-compose exec django python manage.py test
- ```
-- Access the Django shell
- ```console
- docker-compose exec django python manage.py shell
- ```
+- Run tests:
+```console
+docker compose exec django python manage.py test
+```
+- Access the Django shell:
+```console
+docker compose exec django python manage.py shell
+```
 
 ### For deployment on a server
 

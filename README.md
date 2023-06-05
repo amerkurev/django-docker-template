@@ -131,8 +131,6 @@ It will take a few seconds to start the database, migrate, collect static files,
 ```console
 docker compose exec django python manage.py check --deploy
 
-docker compose exec django python manage.py test
-
 docker compose exec django python manage.py shell
 ```
 

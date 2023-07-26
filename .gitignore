@@ -5,10 +5,10 @@
 *.log
 *.pot
 *.pyc
+*.sqlite3
+*.sqlite3-journal
 __pycache__/
 local_settings.py
-db.sqlite3
-db.sqlite3-journal
 media
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/

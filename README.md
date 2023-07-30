@@ -45,12 +45,17 @@ cd django-docker-template
 docker build -t django-docker-template:master .
 ```
 
-3. Run the Django development server inside the Django container:
+3. Create the first superuser:
+```console
+docker run -it --rm -v sqlite:/sqlite django-docker-template:master python manage.py createsuperuser
+```
+
+4. Run the Django development server inside the Django container:
 ```console
 docker run -it --rm -p 8000:8000 -v sqlite:/sqlite -v $(pwd)/website:/usr/src/website django-docker-template:master python manage.py runserver 0.0.0.0:8000
 ```
 
-Now you can go to http://127.0.0.1:8000/admin/ in your browser. The superuser with the login and password `admin/admin` is already created. Go to the Django admin panel and try updating the server code "on the fly." Everything works just like if you were running the Django development server outside the container.
+Now you can go to http://127.0.0.1:8000/admin/ in your browser. Go to the Django admin panel and try updating the server code "on the fly." Everything works just like if you were running the Django development server outside the container.
 
 > Note that we mount the directory with your source code inside the container, so you can work with the project in your IDE, and changes will be visible inside the container, and the Django development server will restart itself. 
 >
@@ -62,23 +67,23 @@ Now you can go to http://127.0.0.1:8000/admin/ in your browser. The superuser wi
 >
 > To better understand how volumes work in Docker, refer to the official [documentation](https://docs.docker.com/storage/volumes/).
 
-4. Run tests:
+5. Run tests:
 ```console
 docker run -it --rm django-docker-template:master python manage.py test polls
 ```
 
-5. Interactive shell with the Django project environment:
+6. Interactive shell with the Django project environment:
 ```console
 docker run -it --rm -v sqlite:/sqlite django-docker-template:master python manage.py shell
 ```
 
-6. Start all services locally (Postgres, Gunicorn, Traefik) using docker-compose:
+7. Start all services locally (Postgres, Gunicorn, Traefik) using docker-compose:
 ```console
 docker compose -f docker-compose.debug.yml up
 ```
 
 Enjoy watching the lines run in the terminal 🖥️   
-And after a few seconds, open your browser at http://127.0.0.1/admin/. The first user already exists, welcome to the Django admin panel.
+And after a few seconds, open your browser at http://127.0.0.1/admin/. The superuser with the login and password `admin/admin` is already created, welcome to the Django admin panel.
 
 Django is still in Debug mode! You can work in your IDE, write code, and immediately see changes inside the container. However, you are currently using Traefik and Postgres. You can also add Redis or MongoDB, and all of this will work in your development environment. This is very convenient.
 

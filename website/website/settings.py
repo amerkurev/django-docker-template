@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'website.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': Path(os.environ['DJANGO_SQLITE_DIR']) / 'db.sqlite3',
+        'NAME': Path(os.getenv('DJANGO_SQLITE_DIR', '.')) / 'db.sqlite3',
     }
 }
 
@@ -138,7 +138,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = os.environ['DJANGO_MEDIA_ROOT']
+MEDIA_ROOT = os.getenv('DJANGO_MEDIA_ROOT', '')
 
 # URL that handles the media served from MEDIA_ROOT.
 # Examples: "http://example.com/media/", "http://media.example.com/"
@@ -150,7 +150,7 @@ MEDIA_URL = os.getenv('DJANGO_MEDIA_URL', 'media/')
 
 STATIC_URL = 'static/'
 
-STATIC_ROOT = os.environ['DJANGO_STATIC_ROOT']
+STATIC_ROOT = os.getenv('DJANGO_STATIC_ROOT')
 
 STATICFILES_DIRS = [BASE_DIR / 'static']
 

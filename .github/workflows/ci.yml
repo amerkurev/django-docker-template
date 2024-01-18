@@ -1,0 +1,35 @@
+name: build
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+    paths-ignore:
+      - '*.md'
+  pull_request:
+    paths-ignore:
+      - '*.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run code linter
+        run: |
+          pip install pylint
+          pylint --exit-zero website/*
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Test and submit coverage report
+        run: |
+          docker build -t django-docker-template:master .
+          docker run -it --rm django-docker-template:master ./pytest.sh

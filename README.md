@@ -24,7 +24,7 @@ So, what do you get by using this project as a template for your project? Let's 
 ## Features
 - A well-configured Django project, with individual settings that can be changed using environment variables
 - Building and debugging a Django project in Docker
-- Integrated `pytest` and `coverage` for robust testing and code quality assurance ✅
+- Integrated [pytest](https://docs.pytest.org) and [coverage](https://coverage.readthedocs.io) for robust testing and code quality assurance ✅
 - A ready-made docker-compose file that brings together Postgres - Django - Gunicorn - Traefik
 - Serving static files (and user-uploaded files) with Nginx
 - Automatic database migration and static file collection when starting or restarting the Django container
@@ -74,7 +74,7 @@ Now you can go to http://127.0.0.1:8000/admin/ in your browser. Go to the Django
 ```console
 docker run -it --rm django-docker-template:master ./pytest.sh
 ```
-The pytest.sh script runs tests using pytest and coverage. As a result, you will see an output like this in the terminal:
+The [pytest.sh](website/pytest.sh) script runs tests using pytest and coverage. As a result, you will see an output like this in the terminal:
 ```console
 ================== test session starts =====================================
 platform linux -- Python 3.11.7, pytest-7.4.4, pluggy-1.3.0

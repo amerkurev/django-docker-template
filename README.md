@@ -77,7 +77,7 @@ Now you can go to http://127.0.0.1:8000/admin/ in your browser. Go to the Django
 
 5. Run tests with pytest and coverage ✅:
 ```console
-docker run -it --rm django-docker-template:master ./pytest.sh
+docker run --rm django-docker-template:master ./pytest.sh
 ```
 The [pytest.sh](website/pytest.sh) script runs tests using pytest and coverage. As a result, you will see an output like this in the terminal:
 ```console
@@ -113,7 +113,7 @@ TOTAL                                        199     12    94%
 
 > If you don't want to use pytest (for some reason), you can run the tests without pytest using the command below:
 > ```console
-> docker run -it --rm django-docker-template:master python manage.py test
+> docker run --rm django-docker-template:master python manage.py test
 > ```
 
 6. Interactive shell with the Django project environment:

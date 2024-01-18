@@ -1,5 +1,6 @@
 # Django + Docker = ❤️
-This simple Django project is an excellent template for your future projects. It includes everything you need to quickly set up a quality technology stack and start developing your web application's business logic, skipping all the complex deployment issues at an early stage.
+This simple Django project is an excellent template for your future projects. 
+It includes everything you need to quickly set up a quality technology stack and start developing your web application's business logic, skipping all the complex deployment issues at an early stage.
 
 ## Technology stack
 The technology stack used includes:
@@ -11,8 +12,9 @@ The technology stack used includes:
 - [`Docker`](https://docs.docker.com/get-docker/) and [`Docker Compose`](https://docs.docker.com/compose/)
 
 Nothing extra, only the essentials! You can easily add everything else yourself by expanding the existing configuration files:
-- [requirements.txt](https://github.com/amerkurev/django-docker-template/blob/master/requirements.txt)
-- [docker-compose.yml](https://github.com/amerkurev/django-docker-template/blob/master/docker-compose.yml)
+- [requirements.txt](requirements.txt)
+- [docker-compose.yml](docker-compose.yml)
+- [pytest.ini](website/pytest.ini)
 - and others...
 
 > This project includes a simple Django application from the official Django tutorial - ["a basic poll application"](https://docs.djangoproject.com/en/4.2/intro/tutorial01/). You can safely delete this application at any time. This application is present in the project as an example, used for testing and debugging.
@@ -22,6 +24,7 @@ So, what do you get by using this project as a template for your project? Let's 
 ## Features
 - A well-configured Django project, with individual settings that can be changed using environment variables
 - Building and debugging a Django project in Docker
+- Integrated `pytest` and `coverage` for robust testing and code quality assurance ✅
 - A ready-made docker-compose file that brings together Postgres - Django - Gunicorn - Traefik
 - Serving static files (and user-uploaded files) with Nginx
 - Automatic database migration and static file collection when starting or restarting the Django container
@@ -67,10 +70,46 @@ Now you can go to http://127.0.0.1:8000/admin/ in your browser. Go to the Django
 >
 > To better understand how volumes work in Docker, refer to the official [documentation](https://docs.docker.com/storage/volumes/).
 
-5. Run tests:
+5. Run tests with pytest and coverage ✅:
 ```console
-docker run -it --rm django-docker-template:master python manage.py test polls
+docker run -it --rm django-docker-template:master ./pytest.sh
 ```
+The pytest.sh script runs tests using pytest and coverage. As a result, you will see an output like this in the terminal:
+```console
+================== test session starts =====================================
+platform linux -- Python 3.11.7, pytest-7.4.4, pluggy-1.3.0
+django: version: 4.2.9, settings: website.settings (from ini)
+rootdir: /usr/src/website
+configfile: pytest.ini
+plugins: django-4.7.0
+collected 10 items
+
+polls/tests.py ..........                                                                                                                                                    [100%]
+
+================== 10 passed in 0.19s ======================================
+Name                                       Stmts   Miss  Cover   Missing
+------------------------------------------------------------------------
+polls/__init__.py                              0      0   100%
+polls/admin.py                                12      0   100%
+polls/apps.py                                  4      0   100%
+polls/migrations/0001_initial.py               6      0   100%
+polls/migrations/0002_question_upload.py       4      0   100%
+polls/migrations/__init__.py                   0      0   100%
+polls/models.py                               20      2    90%   15, 33
+polls/tests.py                                57      0   100%
+polls/urls.py                                  4      0   100%
+polls/views.py                                28      8    71%   39-58
+website/__init__.py                            6      0   100%
+website/settings.py                           52      2    96%   94, 197
+website/urls.py                                6      0   100%
+------------------------------------------------------------------------
+TOTAL                                        199     12    94%
+```
+
+> If you don't want to use pytest (for some reason), you can run the tests without pytest using the command below:
+> ```console
+> docker run -it --rm django-docker-template:master python manage.py test
+> ```
 
 6. Interactive shell with the Django project environment:
 ```console
@@ -101,7 +140,7 @@ docker compose down --remove-orphans --rmi local -v
 
 #### Django settings
 
-Some Django settings from the [`settings.py`](https://github.com/amerkurev/django-docker-template/blob/master/website/website/settings.py) file are stored in environment variables. You can easily change these settings in the [`.env`](https://github.com/amerkurev/django-docker-template/blob/master/.env) file. This file does not contain all the necessary settings, but many of them. Add additional settings to environment variables if needed. 
+Some Django settings from the [`settings.py`](website/website/settings.py) file are stored in environment variables. You can easily change these settings in the [`.env`](.env) file. This file does not contain all the necessary settings, but many of them. Add additional settings to environment variables if needed. 
 
 > It is important to note the following: **never store sensitive settings such as DJANGO_SECRET_KEY or DJANGO_EMAIL_HOST_PASSWORD in your repository!** Docker allows you to override environment variable values from additional files, the command line, or the current session. Store passwords and other sensitive information separately from the code and only connect this information at system startup.
 

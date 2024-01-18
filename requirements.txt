@@ -1,4 +1,7 @@
-Django==4.2.9
+coverage==7.4.0  # for testing
+django==4.2.9
 gunicorn==21.2.0
 psycopg2-binary==2.9.9
+pytest-django==4.7.0  # for testing
+pytest==7.4.4  # for testing
 wait-for-it==2.2.2

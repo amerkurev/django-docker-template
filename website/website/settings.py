@@ -129,7 +129,9 @@ TIME_ZONE = os.getenv('DJANGO_TIME_ZONE', 'UTC')
 
 USE_I18N = True
 
-USE_L10N = True
+# The USE_L10N setting is deprecated. Starting with Django 5.0, localized formatting of data will always be enabled.
+# For example Django will display numbers and dates using the format of the current locale.
+# USE_L10N = True
 
 USE_TZ = True
 

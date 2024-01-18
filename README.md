@@ -2,6 +2,7 @@
 <div>
 
 [![Build](https://github.com/amerkurev/django-docker-template/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/amerkurev/django-docker-template/actions/workflows/ci.yml)
+[![Coverage Status](https://coveralls.io/repos/github/amerkurev/django-docker-template/badge.svg)](https://coveralls.io/github/amerkurev/django-docker-template)
 [![License](https://img.shields.io/badge/license-mit-blue.svg)](LICENSE)
 </div>
 

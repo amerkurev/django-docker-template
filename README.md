@@ -1,4 +1,10 @@
 # Django + Docker = ❤️
+<div>
+
+[![Build](https://github.com/amerkurev/django-docker-template/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/amerkurev/django-docker-template/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/license-mit-blue.svg)](LICENSE)
+</div>
+
 This simple Django project is an excellent template for your future projects. 
 It includes everything you need to quickly set up a quality technology stack and start developing your web application's business logic, skipping all the complex deployment issues at an early stage.
 

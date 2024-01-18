@@ -8,8 +8,3 @@ then
 fi
 
 coverage report -m
-
-# if pass `coveralls` as argument, then send coverage report to coveralls.io
-if [ "$1" == "coveralls" ]; then
-    coveralls --service=github
-fi

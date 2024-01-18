@@ -89,7 +89,7 @@ configfile: pytest.ini
 plugins: django-4.7.0
 collected 10 items
 
-polls/tests.py ..........                                                                                                                                                    [100%]
+polls/tests.py .......... [100%]
 
 ================== 10 passed in 0.19s ======================================
 Name                                       Stmts   Miss  Cover   Missing

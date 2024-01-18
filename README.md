@@ -60,6 +60,9 @@ docker run -it --rm -p 8000:8000 -v sqlite:/sqlite -v $(pwd)/website:/usr/src/we
 
 Now you can go to http://127.0.0.1:8000/admin/ in your browser. Go to the Django admin panel and try updating the server code "on the fly." Everything works just like if you were running the Django development server outside the container.
 
+<details>
+    <summary>Details</summary>
+
 > Note that we mount the directory with your source code inside the container, so you can work with the project in your IDE, and changes will be visible inside the container, and the Django development server will restart itself. 
 >
 > Another important point is the use of SQLite3 instead of Postgres (which we don't run). In our example, we add a volume named `sqlite`. This data is stored persistently and does not disappear between restarts of the Django development server. However, if you have a second similar project, it would be better to change the volume name from `sqlite` to something else so that the second project uses its own copy of the database. For example:
@@ -69,6 +72,7 @@ Now you can go to http://127.0.0.1:8000/admin/ in your browser. Go to the Django
 >```
 >
 > To better understand how volumes work in Docker, refer to the official [documentation](https://docs.docker.com/storage/volumes/).
+</details>
 
 5. Run tests with pytest and coverage ✅:
 ```console

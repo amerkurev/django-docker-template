@@ -6,6 +6,8 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 </div>
 
+![632119](https://github.com/amerkurev/django-docker-template/assets/28217522/f0d31f52-99b9-4bb8-83d5-89140d62fc5c)
+
 This simple Django project is an excellent template for your future projects. 
 It includes everything you need to quickly set up a quality technology stack and start developing your web application's business logic, skipping all the complex deployment issues at an early stage.
 

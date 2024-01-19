@@ -73,7 +73,9 @@ Now you can go to http://127.0.0.1:8000/admin/ in your browser. Go to the Django
     <summary>SQLite Volume Isolation</summary>
 <br/>
 
-> Another important point is the use of SQLite3 instead of Postgres (which we don't run). In our example, we add a volume named `sqlite`. This data is stored persistently and does not disappear between restarts of the Django development server. However, if you have a second similar project, it would be better to change the volume name from `sqlite` to something else so that the second project uses its own copy of the database. For example:
+> Another important point is the use of SQLite3 instead of Postgres, because Postgres is not deployed until Django is run within a Docker Compose environment.
+> In our example, we add a volume named `sqlite`. This data is stored persistently and does not disappear between restarts of the Django development server.
+> However, if you have a second similar project, it would be better to change the volume name from `sqlite` to something else so that the second project uses its own copy of the database. For example:
 > 
 > ```console
 > docker run -it --rm -p 8000:8000 -v another_sqlite:/sqlite -v $(pwd)/website:/usr/src/website django-docker-template:master python manage.py runserver 0.0.0.0:8000

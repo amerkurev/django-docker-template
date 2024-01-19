@@ -16,6 +16,7 @@ The technology stack used includes:
 - [`PostgreSQL`](https://www.postgresql.org) ver. 15
 - [`Gunicorn`](https://gunicorn.org) ver. 21.2
 - [`Traefik`](https://traefik.io/traefik/) ver. 2.9
+- [`Caddy`](https://caddyserver.com) ver. 2.7
 - [`Docker`](https://docs.docker.com/get-docker/) and [`Docker Compose`](https://docs.docker.com/compose/)
 
 Nothing extra, only the essentials! You can easily add everything else yourself by expanding the existing configuration files:
@@ -32,7 +33,7 @@ So, what do you get by using this project as a template for your project? Let's 
 - A well-configured Django project, with individual settings that can be changed using environment variables
 - Building and debugging a Django project in Docker
 - Integrated [pytest](https://docs.pytest.org) and [coverage](https://coverage.readthedocs.io) for robust testing and code quality assurance ✅
-- A ready-made docker-compose file that brings together Postgres - Django - Gunicorn - Traefik
+- A ready-made docker-compose file that brings together Postgres - Django - Gunicorn - Traefik (or Caddy)
 - Serving static files (and user-uploaded files) with Nginx
 - Automatic database migration and static file collection when starting or restarting the Django container
 - Automatic creation of the first user in Django with a default login and password

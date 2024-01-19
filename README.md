@@ -70,7 +70,7 @@ Now you can go to http://127.0.0.1:8000/admin/ in your browser. Go to the Django
 > Note that we mount the directory with your source code inside the container, so you can work with the project in your IDE, and changes will be visible inside the container, and the Django development server will restart itself. 
 
 <details>
-    <summary>SQLite Volume Isolation</summary>
+    <summary>SQLite Usage Details</summary>
 <br/>
 
 > Another important point is the use of SQLite3 instead of Postgres, because Postgres is not deployed until Django is run within a Docker Compose environment.

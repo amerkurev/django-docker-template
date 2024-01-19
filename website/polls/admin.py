@@ -12,7 +12,7 @@ class QuestionAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': ['question_text']}),
         ('Date information', {'fields': ['pub_date'], 'classes': ['expand']}),
-        ('Files', {'fields': ['upload'], 'classes': ['collapse']}),
+        ('Files', {'fields': ['upload'], 'classes': ['expand']}),
     ]
 
     inlines = [ChoiceInline]

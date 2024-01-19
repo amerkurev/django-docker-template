@@ -1,0 +1,58 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:15
+    env_file: .env
+    restart: unless-stopped
+    volumes:
+      - "postgres-data:/var/lib/postgresql/data/"
+
+  django:
+    build: .
+    image: django-docker
+    env_file: .env
+    environment:
+      - "DJANGO_ALLOWED_HOSTS=${MY_DOMAIN}"
+      - "DJANGO_CSRF_TRUSTED_ORIGINS=https://${MY_DOMAIN}"
+      - "DJANGO_SESSION_COOKIE_SECURE=true"
+      - "DJANGO_CSRF_COOKIE_SECURE=true"
+      - "DJANGO_SECURE_SSL_REDIRECT=true"
+    restart: unless-stopped
+    volumes:
+      - "staticfiles-data:/var/www/static"
+      - "media-data:/var/www/media"
+    depends_on:
+      - postgres
+
+  caddy:
+    image: caddy:2.7-alpine
+    env_file: .env
+    environment:
+      - "MY_DOMAIN=${MY_DOMAIN}"
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "./Caddyfile:/etc/caddy/Caddyfile:ro"
+      - "caddy-data:/data"
+      - "caddy-config:/config"
+      - type: volume
+        source: media-data
+        target: /usr/share/caddy/media
+        read_only: true
+        volume:
+          nocopy: true
+      - type: volume
+        source: staticfiles-data
+        target: /usr/share/caddy/static
+        read_only: true
+        volume:
+          nocopy: true
+
+volumes:
+  caddy-data:
+  caddy-config:
+  media-data:
+  postgres-data:
+  staticfiles-data:

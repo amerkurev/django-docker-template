@@ -192,6 +192,27 @@ docker compose exec django python manage.py check --deploy
 docker compose exec django python manage.py shell
 ```
 
+### Using Caddy Server Instead of Traefik
+
+Traefik is a great edge router, but it doesn't serve static files, which is why we pair it with [Nginx](https://github.com/amerkurev/django-docker-template/blob/master/docker-compose.yml#L26) in our setup. If you prefer a single tool that can handle everything, you might want to try [Caddy](https://caddyserver.com).
+
+Caddy can automatically handle the creation and renewal of Let's Encrypt certificates and also serve static files, which allows you to use just one server instead of two.
+
+Here's how to set up Caddy with your project:
+
+1. Ensure you have a [`Caddyfile`](Caddyfile) in your project directory. This file will tell Caddy how to deliver static and media files and how to forward other requests to your Django app.
+
+2. Swap out the `docker-compose.yml` and `docker-compose.tls.yml` with a single [`docker-compose.caddy.yml`](docker-compose.caddy.yml). This file is designed to set up Caddy with Django and Postgres, and it doesn't include Nginx, which makes the file shorter and easier to understand.
+
+3. To get your Django project up with Caddy, run the following command, making sure to replace `your.domain.com` with your actual domain:
+
+```console
+MY_DOMAIN=your.domain.com docker compose -f docker-compose.caddy.yml up -d
+```
+
+Choosing Caddy simplifies your setup by combining the functionalities of Traefik and Nginx into one. It's straightforward and takes care of HTTPS certificates for you automatically.
+Enjoy the ease of deployment with Caddy!
+
 ## What's next?
 
 Now that you have a working project, you can extend it as you like, adding [dashboards for monitoring service health](https://doc.traefik.io/traefik/operations/dashboard/), [centralized log collection](https://www.fluentd.org), [secret storage](https://www.vaultproject.io), and of course, your own Django applications. All of this is beyond the scope of the current description, as the idea of this project is minimalism and providing only the essentials. Good luck!

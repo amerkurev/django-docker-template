@@ -16,6 +16,7 @@ The technology stack used includes:
 - [`PostgreSQL`](https://www.postgresql.org) ver. 15
 - [`Gunicorn`](https://gunicorn.org) ver. 21.2
 - [`Traefik`](https://traefik.io/traefik/) ver. 2.9
+- [`Caddy`](https://caddyserver.com) ver. 2.7
 - [`Docker`](https://docs.docker.com/get-docker/) and [`Docker Compose`](https://docs.docker.com/compose/)
 
 Nothing extra, only the essentials! You can easily add everything else yourself by expanding the existing configuration files:
@@ -32,7 +33,7 @@ So, what do you get by using this project as a template for your project? Let's 
 - A well-configured Django project, with individual settings that can be changed using environment variables
 - Building and debugging a Django project in Docker
 - Integrated [pytest](https://docs.pytest.org) and [coverage](https://coverage.readthedocs.io) for robust testing and code quality assurance ✅
-- A ready-made docker-compose file that brings together Postgres - Django - Gunicorn - Traefik
+- A ready-made docker-compose file that brings together Postgres - Django - Gunicorn - Traefik (or Caddy)
 - Serving static files (and user-uploaded files) with Nginx
 - Automatic database migration and static file collection when starting or restarting the Django container
 - Automatic creation of the first user in Django with a default login and password
@@ -191,6 +192,27 @@ docker compose exec django python manage.py check --deploy
 
 docker compose exec django python manage.py shell
 ```
+
+### Using Caddy Server Instead of Traefik
+
+Traefik is a great edge router, but it doesn't serve static files, which is why we pair it with [Nginx](https://github.com/amerkurev/django-docker-template/blob/master/docker-compose.yml#L26) in our setup. If you prefer a single tool that can handle everything, you might want to try [Caddy](https://caddyserver.com).
+
+Caddy can automatically handle the creation and renewal of Let's Encrypt certificates and also serve static files, which allows you to use just one server instead of two.
+
+Here's how to set up Caddy with your project:
+
+1. Ensure you have a [`Caddyfile`](Caddyfile) in your project directory. This file will tell Caddy how to deliver static and media files and how to forward other requests to your Django app.
+
+2. Swap out the `docker-compose.yml` and `docker-compose.tls.yml` with a single [`docker-compose.caddy.yml`](docker-compose.caddy.yml). This file is designed to set up Caddy with Django and Postgres, and it doesn't include Nginx, which makes the file shorter and easier to understand.
+
+3. To get your Django project up with Caddy, run the following command, making sure to replace `your.domain.com` with your actual domain:
+
+```console
+MY_DOMAIN=your.domain.com docker compose -f docker-compose.caddy.yml up -d
+```
+
+Choosing Caddy simplifies your setup by combining the functionalities of Traefik and Nginx into one. It's straightforward and takes care of HTTPS certificates for you automatically.
+Enjoy the ease of deployment with Caddy!
 
 ## What's next?
 

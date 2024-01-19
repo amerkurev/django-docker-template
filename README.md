@@ -14,6 +14,10 @@ Deploying a Django Project in Production with Automatic Let's Encrypt HTTPS in J
 
 [![asciicast](https://asciinema.org/a/632218.svg)](https://asciinema.org/a/632218)
 
+*Stars on GitHub don't fall from the sky, they're gifted by awesome developers!* 🌟👩🏻‍💻👨‍💻👩🏽‍💻👨🏿‍💻 
+
+*Would you gift one to my project?* 🙏✨
+
 ## Technology stack
 The technology stack used includes:
 - [`Python`](https://www.python.org) ver. 3.11

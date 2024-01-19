@@ -9,6 +9,11 @@
 This simple Django project is an excellent template for your future projects. 
 It includes everything you need to quickly set up a quality technology stack and start developing your web application's business logic, skipping all the complex deployment issues at an early stage.
 
+## See in Action
+Deploying a Django Project in Production with Automatic Let's Encrypt HTTPS in Just 55 Seconds... 🏎️💨 ...🏁
+
+[![asciicast](https://asciinema.org/a/632218.svg)](https://asciinema.org/a/632218)
+
 ## Technology stack
 The technology stack used includes:
 - [`Python`](https://www.python.org) ver. 3.11
@@ -16,7 +21,7 @@ The technology stack used includes:
 - [`PostgreSQL`](https://www.postgresql.org) ver. 15
 - [`Gunicorn`](https://gunicorn.org) ver. 21.2
 - [`Traefik`](https://traefik.io/traefik/) ver. 2.9
-- [`Caddy`](https://caddyserver.com) ver. 2.7
+- [`Caddy`](https://caddyserver.com) ver. 2.7 *(instead of Traefik if you wish)*
 - [`Docker`](https://docs.docker.com/get-docker/) and [`Docker Compose`](https://docs.docker.com/compose/)
 
 Nothing extra, only the essentials! You can easily add everything else yourself by expanding the existing configuration files:

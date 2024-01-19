@@ -12,7 +12,7 @@ It includes everything you need to quickly set up a quality technology stack and
 ## See in Action
 Deploying a Django Project in Production with Automatic Let's Encrypt HTTPS in Just 55 Seconds... 🏎️💨 ...🏁
 
-[![asciicast](https://asciinema.org/a/632218.svg)](https://asciinema.org/a/632218)
+<a href="https://asciinema.org/a/632218" ><img width="939" alt="image" src="https://github.com/amerkurev/django-docker-template/assets/28217522/6409c517-e868-4baf-8be6-18bb0d59e5f7"></a>
 
 *Star this project if it's what you were looking for! ⭐️*
 

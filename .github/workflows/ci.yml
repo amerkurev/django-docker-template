@@ -8,18 +8,14 @@ on:
       - '*'
     paths-ignore:
       - '*.md'
-  pull_request:
-    paths-ignore:
-      - '*.md'
   pull_request_review:
     types: [submitted]
-    paths-ignore:
-      - '*.md'
+
 
 jobs:
   build:
+    if: github.event_name == 'push' || github.event.review.state == 'APPROVED'
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4

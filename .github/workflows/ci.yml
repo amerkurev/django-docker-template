@@ -11,6 +11,10 @@ on:
   pull_request:
     paths-ignore:
       - '*.md'
+  pull_request_review:
+    types: [submitted]
+    paths-ignore:
+      - '*.md'
 
 jobs:
   build:

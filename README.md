@@ -79,6 +79,7 @@ Now you can go to http://127.0.0.1:8000/admin/ in your browser. Go to the Django
 
 <details markdown="1">
 <summary>SQLite Usage Details</summary>
+
 > Another important point is the use of SQLite3 instead of Postgres, because Postgres is not deployed until Django is run within a Docker Compose environment.
 > In our example, we add a volume named `sqlite`. This data is stored persistently and does not disappear between restarts of the Django development server.
 > However, if you have a second similar project, it would be better to change the volume name from `sqlite` to something else so that the second project uses its own copy of the database. For example:

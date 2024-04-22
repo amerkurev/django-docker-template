@@ -18,6 +18,7 @@ Deploying a Django Project in Production with Automatic Let's Encrypt HTTPS in J
 
 ## Technology stack
 The technology stack used includes:
+
 - [`Python`](https://www.python.org) ver. 3.11
 - [`Django`](https://www.djangoproject.com) ver. 4.2
 - [`PostgreSQL`](https://www.postgresql.org) ver. 15

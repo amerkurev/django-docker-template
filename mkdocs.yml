@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
 
 site_name: Django Docker Template
-site_url: https://github.com/amerkurev/django-docker-template  # TODO: replace to django-docker.dev
+site_url: https://amerkurev.github.io/django-docker-template/
 
 repo_url: https://github.com/amerkurev/django-docker-template
 repo_name: django-docker-template
@@ -13,6 +13,8 @@ theme:
   # https://icon-sets.iconify.design/?query=django
   logo: images/logo.svg
   favicon: images/favicon.svg
+  icon:
+    repo: fontawesome/brands/github
   features:
     - toc.integrate
     - content.code.copy
@@ -33,18 +35,25 @@ theme:
     # - navigation.tracking
   # https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/#system-preference
   palette:
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
       toggle:
-        icon: material/lightbulb-outline
+        icon: material/brightness-7
         name: Switch to dark mode
+
     # Palette toggle for dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       toggle:
-        icon: material/lightbulb
-        name: Switch to light mode
+        icon: material/brightness-4
+        name: Switch to system preference
 
 # noinspection YAMLSchemaValidation
 markdown_extensions:
@@ -58,6 +67,9 @@ markdown_extensions:
       permalink: true
 
   # https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown-extensions/
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
   - pymdownx.betterem
   - pymdownx.details
   - pymdownx.snippets

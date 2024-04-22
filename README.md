@@ -1,5 +1,5 @@
 # Django + Docker = ❤️
-<div>
+<div markdown="1">
 
 [![Build](https://github.com/amerkurev/django-docker-template/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/amerkurev/django-docker-template/actions/workflows/ci.yml)
 [![Coverage Status](https://coveralls.io/repos/github/amerkurev/django-docker-template/badge.svg)](https://coveralls.io/github/amerkurev/django-docker-template)
@@ -77,17 +77,15 @@ Now you can go to http://127.0.0.1:8000/admin/ in your browser. Go to the Django
 
 > Note that we mount the directory with your source code inside the container, so you can work with the project in your IDE, and changes will be visible inside the container, and the Django development server will restart itself. 
 
-<details>
-    <summary>SQLite Usage Details</summary>
-<br/>
-
+<details markdown="1">
+<summary>SQLite Usage Details</summary>
 > Another important point is the use of SQLite3 instead of Postgres, because Postgres is not deployed until Django is run within a Docker Compose environment.
 > In our example, we add a volume named `sqlite`. This data is stored persistently and does not disappear between restarts of the Django development server.
 > However, if you have a second similar project, it would be better to change the volume name from `sqlite` to something else so that the second project uses its own copy of the database. For example:
-> 
-> ```console
-> docker run -it --rm -p 8000:8000 -v another_sqlite:/sqlite -v $(pwd)/website:/usr/src/website django-docker-template:master python manage.py runserver 0.0.0.0:8000
-> ```
+>
+```console
+docker run -it --rm -p 8000:8000 -v another_sqlite:/sqlite -v $(pwd)/website:/usr/src/website django-docker-template:master python manage.py runserver 0.0.0.0:8000
+```
 > 
 >  To better understand how volumes work in Docker, refer to the official [documentation](https://docs.docker.com/storage/volumes/).
 </details>

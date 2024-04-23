@@ -2,7 +2,7 @@
 
 # https://www.mkdocs.org/user-guide/configuration/
 site_name: Django Docker Template
-site_url: https://amerkurev.github.io/django-docker-template/
+site_url: https://django-docker.dev/
 site_description: Dockerized Django with Postgres, Gunicorn, and Traefik or Caddy (with auto renew Let's Encrypt)
 site_author: https://github.com/amerkurev
 

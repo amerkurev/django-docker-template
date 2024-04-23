@@ -1,7 +1,10 @@
 # yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
 
+# https://www.mkdocs.org/user-guide/configuration/
 site_name: Django Docker Template
 site_url: https://amerkurev.github.io/django-docker-template/
+site_description: Dockerized Django with Postgres, Gunicorn, and Traefik or Caddy (with auto renew Let's Encrypt)
+site_author: https://github.com/amerkurev
 
 repo_url: https://github.com/amerkurev/django-docker-template
 repo_name: django-docker-template
@@ -57,10 +60,13 @@ theme:
 
 # noinspection YAMLSchemaValidation
 markdown_extensions:
+  - smarty
+  - sane_lists
   # https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown/
   - abbr
   - admonition
   - attr_list
+  - def_list
   - md_in_html
   - tables
   - toc:

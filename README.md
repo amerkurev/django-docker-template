@@ -3,7 +3,7 @@
 
 [![Build](https://github.com/amerkurev/django-docker-template/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/amerkurev/django-docker-template/actions/workflows/ci.yml)
 [![Coverage Status](https://coveralls.io/repos/github/amerkurev/django-docker-template/badge.svg)](https://coveralls.io/github/amerkurev/django-docker-template)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/amerkurev/django-docker-template/blob/master/LICENSE)
 </div>
 
 This simple Django project is an excellent template for your future projects. 
@@ -28,12 +28,14 @@ The technology stack used includes:
 - [`Docker`](https://docs.docker.com/get-docker/) and [`Docker Compose`](https://docs.docker.com/compose/)
 
 Nothing extra, only the essentials! You can easily add everything else yourself by expanding the existing configuration files:
-- [requirements.txt](requirements.txt)
-- [docker-compose.yml](docker-compose.yml)
-- [pytest.ini](website/pytest.ini)
+
+- [requirements.txt](https://github.com/amerkurev/django-docker-template/blob/master/requirements.txt)
+- [docker-compose.yml](https://github.com/amerkurev/django-docker-template/blob/master/docker-compose.yml)
+- [pytest.ini](https://github.com/amerkurev/django-docker-template/blob/master/website/pytest.ini)
 - and others...
 
-> This project includes a simple Django application from the official Django tutorial - ["a basic poll application"](https://docs.djangoproject.com/en/4.2/intro/tutorial01/). You can safely delete this application at any time. This application is present in the project as an example, used for testing and debugging.
+> This project includes a simple Django application from the official Django tutorial - ["a basic poll application"](https://docs.djangoproject.com/en/4.2/intro/tutorial01/).
+> You can safely delete this application at any time. This application is present in the project as an example, used for testing and debugging.
 
 So, what do you get by using this project as a template for your project? Let's take a look.
 
@@ -74,7 +76,8 @@ docker run -it --rm -v sqlite:/sqlite django-docker-template:master python manag
 docker run -it --rm -p 8000:8000 -v sqlite:/sqlite -v $(pwd)/website:/usr/src/website django-docker-template:master python manage.py runserver 0.0.0.0:8000
 ```
 
-Now you can go to http://127.0.0.1:8000/admin/ in your browser. Go to the Django admin panel and try updating the server code "on the fly." Everything works just like if you were running the Django development server outside the container.
+Now you can go to [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) in your browser. Go to the Django admin panel and try updating the server code "on the fly".
+Everything works just like if you were running the Django development server outside the container.
 
 > Note that we mount the directory with your source code inside the container, so you can work with the project in your IDE, and changes will be visible inside the container, and the Django development server will restart itself. 
 
@@ -96,7 +99,7 @@ docker run -it --rm -p 8000:8000 -v another_sqlite:/sqlite -v $(pwd)/website:/us
 ```console
 docker run --rm django-docker-template:master ./pytest.sh
 ```
-The [pytest.sh](website/pytest.sh) script runs tests using pytest and coverage. As a result, you will see an output like this in the terminal:
+The [pytest.sh](https://github.com/amerkurev/django-docker-template/blob/master/website/pytest.sh) script runs tests using pytest and coverage. As a result, you will see an output like this in the terminal:
 ```console
 ================== test session starts =====================================
 platform linux -- Python 3.11.7, pytest-7.4.4, pluggy-1.3.0
@@ -129,9 +132,9 @@ TOTAL                                        199     12    94%
 ```
 
 > If you don't want to use pytest (for some reason), you can run the tests without pytest using the command below:
-> ```console
-> docker run --rm django-docker-template:master python manage.py test
-> ```
+```console
+docker run --rm django-docker-template:master python manage.py test
+```
 
 6. Interactive shell with the Django project environment:
 ```console
@@ -144,9 +147,10 @@ docker compose -f docker-compose.debug.yml up
 ```
 
 Enjoy watching the lines run in the terminal 🖥️   
-And after a few seconds, open your browser at http://127.0.0.1/admin/. The superuser with the login and password `admin/admin` is already created, welcome to the Django admin panel.
+And after a few seconds, open your browser at [http://127.0.0.1/admin/](http://127.0.0.1/admin/). The superuser with the login and password `admin/admin` is already created, welcome to the Django admin panel.
 
-Django is still in Debug mode! You can work in your IDE, write code, and immediately see changes inside the container. However, you are currently using Traefik and Postgres. You can also add Redis or MongoDB, and all of this will work in your development environment. This is very convenient.
+Django is still in Debug mode! You can work in your IDE, write code, and immediately see changes inside the container. However, you are currently using Traefik and Postgres.
+You can also add Redis or MongoDB, and all of this will work in your development environment. This is very convenient.
 
 > Between Docker Compose restarts, your database data and media files uploaded to the server will be preserved because they are stored in special volumes that are not deleted when containers are restarted.
 
@@ -162,15 +166,19 @@ docker compose down --remove-orphans --rmi local -v
 
 #### Django settings
 
-Some Django settings from the [`settings.py`](website/website/settings.py) file are stored in environment variables. You can easily change these settings in the [`.env`](.env) file. This file does not contain all the necessary settings, but many of them. Add additional settings to environment variables if needed. 
+Some Django settings from the [`settings.py`](https://github.com/amerkurev/django-docker-template/blob/master/website/website/settings.py) file are stored in environment variables.
+You can easily change these settings in the [`.env`](https://github.com/amerkurev/django-docker-template/blob/master/.env) file.
+This file does not contain all the necessary settings, but many of them. Add additional settings to environment variables if needed.
 
-> It is important to note the following: **never store sensitive settings such as DJANGO_SECRET_KEY or DJANGO_EMAIL_HOST_PASSWORD in your repository!** Docker allows you to override environment variable values from additional files, the command line, or the current session. Store passwords and other sensitive information separately from the code and only connect this information at system startup.
+> It is important to note the following: **never store sensitive settings such as DJANGO_SECRET_KEY or DJANGO_EMAIL_HOST_PASSWORD in your repository!**
+> Docker allows you to override environment variable values from additional files, the command line, or the current session. Store passwords and other sensitive information separately from the code and only connect this information at system startup.
 
 ### For deployment on a server
 
 #### Prerequisite
 
 For the Let's Encrypt HTTP challenge you will need:
+
 - A publicly accessible host allowing connections on port `80` & `443` with docker & docker-compose installed. A virtual machine in any cloud provider can be used as a host.
 - A DNS record with the domain you want to expose pointing to this host.
 
@@ -202,15 +210,16 @@ docker compose exec django python manage.py shell
 
 ### Using Caddy Server Instead of Traefik
 
-Traefik is a great edge router, but it doesn't serve static files, which is why we pair it with [Nginx](https://github.com/amerkurev/django-docker-template/blob/master/docker-compose.yml#L26) in our setup. If you prefer a single tool that can handle everything, you might want to try [Caddy](https://caddyserver.com).
+Traefik is a great edge router, but it doesn't serve static files, which is why we pair it with [Nginx](https://github.com/amerkurev/django-docker-template/blob/master/docker-compose.yml#L26) in our setup.
+If you prefer a single tool that can handle everything, you might want to try [Caddy](https://caddyserver.com).
 
 Caddy can automatically handle the creation and renewal of Let's Encrypt certificates and also serve static files, which allows you to use just one server instead of two.
 
 Here's how to set up Caddy with your project:
 
-1. Ensure you have a [`Caddyfile`](Caddyfile) in your project directory. This file will tell Caddy how to deliver static and media files and how to forward other requests to your Django app.
+1. Ensure you have a [`Caddyfile`](https://github.com/amerkurev/django-docker-template/blob/master/Caddyfile) in your project directory. This file will tell Caddy how to deliver static and media files and how to forward other requests to your Django app.
 
-2. Swap out the `docker-compose.yml` and `docker-compose.tls.yml` with a single [`docker-compose.caddy.yml`](docker-compose.caddy.yml). This file is designed to set up Caddy with Django and Postgres, and it doesn't include Nginx, which makes the file shorter and easier to understand.
+2. Swap out the `docker-compose.yml` and `docker-compose.tls.yml` with a single [`docker-compose.caddy.yml`](https://github.com/amerkurev/django-docker-template/blob/master/docker-compose.caddy.yml). This file is designed to set up Caddy with Django and Postgres, and it doesn't include Nginx, which makes the file shorter and easier to understand.
 
 3. To get your Django project up with Caddy, run the following command, making sure to replace `your.domain.com` with your actual domain:
 
@@ -223,8 +232,9 @@ Enjoy the ease of deployment with Caddy!
 
 ## What's next?
 
-Now that you have a working project, you can extend it as you like, adding [dashboards for monitoring service health](https://doc.traefik.io/traefik/operations/dashboard/), [centralized log collection](https://www.fluentd.org), [secret storage](https://www.vaultproject.io), and of course, your own Django applications. All of this is beyond the scope of the current description, as the idea of this project is minimalism and providing only the essentials. Good luck!
+Now that you have a working project, you can extend it as you like, adding [dashboards for monitoring service health](https://doc.traefik.io/traefik/operations/dashboard/), [centralized log collection](https://www.fluentd.org), [secret storage](https://www.vaultproject.io), and of course, your own Django applications.
+All of this is beyond the scope of the current description, as the idea of this project is minimalism and providing only the essentials. Good luck!
 
 ## License
 
-[MIT](LICENSE)
+[MIT](https://github.com/amerkurev/django-docker-template/blob/master/LICENSE)

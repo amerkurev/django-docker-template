@@ -1,0 +1,19 @@
+{
+  "configurations": [
+    {
+      "name": "Simple Debug",
+      "type": "docker",
+      "request": "launch",
+      "preLaunchTask": "docker-run: debug",
+      "python": {
+        "pathMappings": [
+          {
+            "localRoot": "${workspaceFolder}/website/",
+            "remoteRoot": "/usr/src/website/"
+          }
+        ],
+        "projectType": "django"
+      }
+    }
+  ]
+}

@@ -89,8 +89,8 @@ DATABASES = {
         'NAME': Path(os.getenv('DJANGO_SQLITE_DIR', '.')) / 'db.sqlite3',
     }
 }
-
-if 'POSTGRES_DB' in os.environ:
+# VS
+if bool(os.getenv('POSTGRES_DB')):
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ['POSTGRES_DB'],

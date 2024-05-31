@@ -1,0 +1,41 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "docker-build",
+      "label": "docker-build",
+      "platform": "python",
+      "dockerBuild": {
+        "tag": "django-docker-template:master",
+        "dockerfile": "${workspaceFolder}/Dockerfile",
+        "context": "${workspaceFolder}",
+        "pull": true
+      }
+    },
+    {
+      "type": "docker-run",
+      "label": "docker-run: debug",
+      "dependsOn": ["docker-build"], // and the first usage of createsuperuser, but that adds complexity for the user
+      "dockerRun": {
+        "image": "django-docker-template:master",
+        "envFiles": ["${workspaceFolder}/.env"],
+        "env": {
+          "DJANGO_DEBUG": "True",
+          "POSTGRES_DB": "",
+        },
+        // "volume" option only actually supports folders, not docker volumes
+        "customOptions": "-v sqlite:/sqlite",
+        "ports": [
+          {
+            "containerPort": 8000,
+            "hostPort": 8000
+          }
+        ],
+      },
+      "python": {
+        "file": "manage.py",
+        "args": ["runserver", "0.0.0.0:8000", "--nothreading"]
+      }
+    }
+  ]
+}

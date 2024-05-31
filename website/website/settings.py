@@ -89,7 +89,7 @@ DATABASES = {
         'NAME': Path(os.getenv('DJANGO_SQLITE_DIR', '.')) / 'db.sqlite3',
     }
 }
-# VS
+# If POSTGRES_DB is truthy, use PostgreSQL. https://docs.python.org/3/library/stdtypes.html#truth-value-testing
 if bool(os.getenv('POSTGRES_DB')):
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.postgresql',

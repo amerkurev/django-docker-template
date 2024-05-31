@@ -1,5 +1,6 @@
 /* 
 hide root .env file from vscode. default is {"python.envFile" : ".env"}
-hiding prevent vscode from adding .env with highest priority to docker container 
+hiding prevent vscode from adding .env with highest priority to docker container,
+interfering with environment overrides.
 */
 { "python.envFile": "" }

@@ -5,6 +5,10 @@
       "type": "docker-build",
       "label": "docker-build",
       "platform": "python",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
       "dockerBuild": {
         "tag": "django-docker-template:master",
         "dockerfile": "${workspaceFolder}/Dockerfile",
@@ -13,7 +17,14 @@
       }
     },
     {
-      // shell is used here as vscode keeps docker-run tasks running. This would then be reserving the container name, blocking future tasks.
+      "type": "shell",
+      "label": "shell: pytest.sh",
+      "dependsOn": ["docker-build"],
+      "command": "docker run --rm django-docker-template:master ./pytest.sh",
+      "problemMatcher": []
+    },
+    {
+      // shell is used here as vscode keeps docker-run tasks running for debugpy. This would then be reserving the default container name, blocking future tasks.
       "type": "shell",
       "label": "shell: ensure superuser",
       "dependsOn": ["docker-build"],
@@ -23,9 +34,10 @@
     {
       "type": "docker-run",
       "label": "docker-run: debug",
-      "dependsOn": ["shell: ensure superuser"], // and the first usage of createsuperuser, but that adds complexity for the user
+      "dependsOn": ["shell: ensure superuser"],
       "dockerRun": {
         "image": "django-docker-template:master",
+        "remove": true,
         // get all the env vars from the .env file
         "envFiles": ["${workspaceFolder}/.env"],
         // override some of the env vars not useful for development
@@ -35,6 +47,7 @@
         },
         // "volume" option uses type=bind, can not work as expected https://code.visualstudio.com/docs/containers/reference#_volumes-object-properties
         // "volumes": [{ "localPath": "sqlite", "containerPath": "/sqlite" }],
+        // instead we will use the below for a volume mount
         "customOptions": "-v sqlite:/sqlite",
         "ports": [
           {

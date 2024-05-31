@@ -126,7 +126,7 @@ cython_debug/
 .idea/
 
 # VSCode
-.vscode
+# .vscode
 
 # System
 .DS_Store

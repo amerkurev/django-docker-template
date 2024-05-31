@@ -13,24 +13,35 @@
       }
     },
     {
+      // shell is used here as vscode keeps docker-run tasks running. This would then be reserving the container name, blocking future tasks.
+      "type": "shell",
+      "label": "shell: ensure superuser",
+      "dependsOn": ["docker-build"],
+      "command": "docker run --rm -v sqlite:/sqlite django-docker-template:master python manage.py safecreatesuperuser --no-input",
+      "problemMatcher": []
+    },
+    {
       "type": "docker-run",
       "label": "docker-run: debug",
-      "dependsOn": ["docker-build"], // and the first usage of createsuperuser, but that adds complexity for the user
+      "dependsOn": ["shell: ensure superuser"], // and the first usage of createsuperuser, but that adds complexity for the user
       "dockerRun": {
         "image": "django-docker-template:master",
+        // get all the env vars from the .env file
         "envFiles": ["${workspaceFolder}/.env"],
+        // override some of the env vars not useful for development
         "env": {
           "DJANGO_DEBUG": "True",
-          "POSTGRES_DB": "",
+          "POSTGRES_DB": ""
         },
-        // "volume" option only actually supports folders, not docker volumes
+        // "volume" option uses type=bind, can not work as expected https://code.visualstudio.com/docs/containers/reference#_volumes-object-properties
+        // "volumes": [{ "localPath": "sqlite", "containerPath": "/sqlite" }],
         "customOptions": "-v sqlite:/sqlite",
         "ports": [
           {
             "containerPort": 8000,
             "hostPort": 8000
           }
-        ],
+        ]
       },
       "python": {
         "file": "manage.py",

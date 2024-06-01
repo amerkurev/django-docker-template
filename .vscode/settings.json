@@ -1,0 +1,8 @@
+/* 
+hide root .env file from vscode. default is {"python.envFile" : ".env"}
+This prevents vscode from adding its variables to the launch shell, which holds higher
+priority over everything but the '-e' flag. Typically the .env file is very low priority.
+More information can be found here:
+https://docs.docker.com/compose/environment-variables/envvars-precedence/
+*/
+{ "python.envFile": "" }

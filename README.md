@@ -22,7 +22,7 @@ The technology stack used includes:
 - [`Python`](https://www.python.org) ver. 3.11
 - [`Django`](https://www.djangoproject.com) ver. 4.2
 - [`PostgreSQL`](https://www.postgresql.org) ver. 15
-- [`Gunicorn`](https://gunicorn.org) ver. 21.2
+- [`Gunicorn`](https://gunicorn.org) ver. 22.0
 - [`Traefik`](https://traefik.io/traefik/) ver. 2.9
 - [`Caddy`](https://caddyserver.com) ver. 2.7 *(instead of Traefik if you wish)*
 - [`Docker`](https://docs.docker.com/get-docker/) and [`Docker Compose`](https://docs.docker.com/compose/)

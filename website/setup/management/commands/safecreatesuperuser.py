@@ -31,15 +31,19 @@ class Command(BaseCommand):
             options["email"] = os.environ["DJANGO_SUPERUSER_EMAIL"]
             options["password"] = os.environ["DJANGO_SUPERUSER_PASSWORD"]
 
+        defaults = {
+            "email": options["email"],
+            "password": options["password"],
+            "is_superuser": True,
+            "is_staff": True,
+        }
+
         obj, created = User.objects.get_or_create(
             username=options["username"],
-            email=options["email"],
-            password=options["password"],
-            is_superuser=True,
-            is_staff=True,
+            defaults=defaults,
         )
 
         if created:
-            self.stdout.write(self.style.SUCCESS("Admin user created"))
+            self.stdout.write(self.style.SUCCESS(f"Superuser created: {obj}"))
         else:
-            self.stdout.write(self.style.SUCCESS("Admin user already exists"))
+            self.stdout.write(self.style.SUCCESS(f"Superuser already exists: {obj}"))

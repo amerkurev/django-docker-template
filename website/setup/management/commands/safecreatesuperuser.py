@@ -7,6 +7,7 @@ import os
 
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
+from django.contrib.auth.hashers import make_password
 
 
 class Command(BaseCommand):
@@ -33,7 +34,7 @@ class Command(BaseCommand):
 
         defaults = {
             "email": options["email"],
-            "password": options["password"],
+            "password": make_password(options["password"]),
             "is_superuser": True,
             "is_staff": True,
         }

@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", INSECURE_KEY)
 DEBUG = is_true(os.getenv("DJANGO_DEBUG", "true"))
 
 ALLOWED_HOSTS = split_with_comma(
-    os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost")
+    os.getenv("DJANGO_ALLOWED_HOSTS")
 )
 
 INTERNAL_IPS = ["127.0.0.1"]
@@ -52,7 +52,16 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "polls.apps.PollsConfig",
+    "rest_framework",
+    "rest_framework_simplejwt",
+    "serviceday",
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

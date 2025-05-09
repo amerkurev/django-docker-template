@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  postgres:
+  postgres-data:
     image: postgres:15
     env_file: .env
     restart: unless-stopped
@@ -15,8 +15,10 @@ services:
     volumes:
       - "staticfiles-data:/var/www/static"
       - "media-data:/var/www/media"
+      - "./django-docker-template:/app"  # Map local project directory to /app in the container
+
     depends_on:
-      - postgres
+      - postgres-data
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.development.rule=Host(`127.0.0.1`) || Host(`localhost`)"
@@ -66,7 +68,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      #- "8080:8080"
+      - "8080:8080"
     volumes:
       - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"

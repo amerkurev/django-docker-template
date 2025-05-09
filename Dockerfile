@@ -5,7 +5,7 @@ FROM base as builder
 RUN apk update && apk --no-cache add python3-dev libpq-dev && mkdir /install
 WORKDIR /install
 COPY requirements.txt ./
-RUN pip install --no-cache-dir --prefix=/install -r ./requirements.txt
+RUN pip install --no-cache-dir --prefix=/install -r ./requirements.txt --timeout=120 --retries=5
 
 FROM base
 

@@ -1,4 +1,28 @@
+# Declare global ARGs here to be available to all stages
+ARG PROJECT_NAME=website
+ARG DJANGO_BASE_DIR=/usr/src/website
+ARG DJANGO_STATIC_ROOT=/var/www/static
+ARG DJANGO_MEDIA_ROOT=/var/www/media
+ARG DJANGO_SQLITE_DIR=/sqlite
+ARG USER_UID=1001
+ARG USER=user
+
+ARG GUNICORN_PORT=8000
+ARG GUNICORN_WORKERS=2
+ARG GUNICORN_TIMEOUT=60
+ARG GUNICORN_LOG_LEVEL=info
+
+# The superuser with the data below will be created only if there are no users in the database!
+ARG DJANGO_SUPERUSER_USERNAME=admin
+ARG DJANGO_SUPERUSER_PASSWORD=admin
+ARG DJANGO_SUPERUSER_EMAIL=admin@example.com
+ARG DJANGO_DEV_SERVER_PORT=8000
+
 FROM python:3.11-alpine as base
+
+# Must re-declare ARGs for use in this stage
+ARG USER
+ARG USER_UID
 
 FROM base as builder
 
@@ -9,23 +33,22 @@ RUN pip install --no-cache-dir --prefix=/install -r ./requirements.txt --timeout
 
 FROM base
 
-ARG USER=user
-ARG USER_UID=1001
-ARG PROJECT_NAME=website
-ARG GUNICORN_PORT=8000
-ARG GUNICORN_WORKERS=2
-# the value is in seconds
-ARG GUNICORN_TIMEOUT=60
-ARG GUNICORN_LOG_LEVEL=info
-ARG DJANGO_BASE_DIR=/usr/src/$PROJECT_NAME
-ARG DJANGO_STATIC_ROOT=/var/www/static
-ARG DJANGO_MEDIA_ROOT=/var/www/media
-ARG DJANGO_SQLITE_DIR=/sqlite
-# The superuser with the data below will be created only if there are no users in the database!
-ARG DJANGO_SUPERUSER_USERNAME=admin
-ARG DJANGO_SUPERUSER_PASSWORD=admin
-ARG DJANGO_SUPERUSER_EMAIL=admin@example.com
-ARG DJANGO_DEV_SERVER_PORT=8000
+# Re-declare all needed ARGs again for this final stage
+ARG DJANGO_BASE_DIR
+ARG DJANGO_STATIC_ROOT
+ARG DJANGO_MEDIA_ROOT
+ARG DJANGO_SQLITE_DIR
+ARG USER_UID
+ARG USER
+ARG PROJECT_NAME
+ARG GUNICORN_PORT
+ARG GUNICORN_WORKERS
+ARG GUNICORN_TIMEOUT
+ARG GUNICORN_LOG_LEVEL
+ARG DJANGO_SUPERUSER_USERNAME
+ARG DJANGO_SUPERUSER_PASSWORD
+ARG DJANGO_SUPERUSER_EMAIL
+ARG DJANGO_DEV_SERVER_PORT
 
 
 ENV \
@@ -45,21 +68,19 @@ ENV \
 	DJANGO_SUPERUSER_EMAIL=$DJANGO_SUPERUSER_EMAIL \
 	DJANGO_DEV_SERVER_PORT=$DJANGO_DEV_SERVER_PORT
 
-
 COPY --from=builder /install /usr/local
-COPY docker-entrypoint.sh /
 COPY docker-cmd.sh /
-COPY $PROJECT_NAME $DJANGO_BASE_DIR
+COPY wait-for-db.sh /
+COPY website /usr/src/website
 
 # User
-RUN chmod +x /docker-entrypoint.sh /docker-cmd.sh && \
-    apk --no-cache add su-exec libpq-dev && \
+RUN apk add --no-cache bash su-exec && \
+	chmod +x /docker-cmd.sh /wait-for-db.sh && \
     mkdir -p $DJANGO_STATIC_ROOT $DJANGO_MEDIA_ROOT $DJANGO_SQLITE_DIR && \
     adduser -s /bin/sh -D -u $USER_UID $USER && \
     chown -R $USER:$USER $DJANGO_BASE_DIR $DJANGO_STATIC_ROOT $DJANGO_MEDIA_ROOT $DJANGO_SQLITE_DIR
 
 WORKDIR $DJANGO_BASE_DIR
-ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["/docker-cmd.sh"]
+ENTRYPOINT ["/docker-cmd.sh"]
 
 EXPOSE $GUNICORN_PORT

@@ -19,11 +19,19 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf.urls.static import static
 from django.conf import settings
-
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("polls/", include("polls.urls")),
+    #path("serviceday/", include("serviceday.urls")),
+    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    # Optional DRF login/logout UI
+    path("api-auth/", include("rest_framework.urls")),
 ]
 
 # Serve media files from MEDIA_ROOT. It will only work when DEBUG=True is set.
